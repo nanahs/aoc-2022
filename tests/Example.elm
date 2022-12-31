@@ -2,6 +2,7 @@ module Example exposing (..)
 
 import Day01
 import Day02
+import Day03
 import Expect exposing (Expectation)
 import Fuzz exposing (Fuzzer, int, list, string)
 import Test exposing (..)
@@ -9,7 +10,7 @@ import Test exposing (..)
 
 suite : Test
 suite =
-    todo day2Part2
+    todo day3Part1
 
 
 day1Part1 : String
@@ -24,9 +25,14 @@ day1Part2 =
 
 day2Part1 : String
 day2Part1 =
-    String.join " " [ "Day02:", String.fromInt Day02.totalScorePart1 ]
+    String.join " " [ "Day02", "Part 1:", String.fromInt Day02.totalScorePart1 ]
 
 
 day2Part2 : String
 day2Part2 =
-    String.join " " [ "Day02:", String.fromInt Day02.totalScorePart2 ]
+    String.join " " [ "Day02", "Part 2:", String.fromInt Day02.totalScorePart2 ]
+
+
+day3Part1 : String
+day3Part1 =
+    String.join " " [ "Day03", "Part 1:", String.fromInt Day03.totalPriority ]
