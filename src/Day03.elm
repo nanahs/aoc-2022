@@ -1,7 +1,8 @@
-module Day03 exposing (totalPriority)
+module Day03 exposing (groupPriority, totalPriority)
 
 import Inputs.Day03 as Day03
 import Set exposing (Set)
+import Tuple exposing (second)
 
 
 totalPriority : Int
@@ -12,6 +13,54 @@ totalPriority =
         |> List.sum
 
 
+groupPriority : Int
+groupPriority =
+    Day03.rucksacks
+        |> String.split "\n"
+        |> groupsOfThree
+        |> List.map groupBadge
+        |> List.map toPrio
+        |> List.sum
+
+
+groupBadge : ( String, String, String ) -> String
+groupBadge ( first, second, third ) =
+    let
+        firstSet =
+            toSet first
+
+        secondSet =
+            toSet second
+
+        thirdSet =
+            toSet third
+    in
+    firstSet
+        |> Set.intersect secondSet
+        |> Set.intersect thirdSet
+        |> Set.toList
+        |> List.head
+        |> Maybe.withDefault ""
+
+
+groupsOfThree : List a -> List ( a, a, a )
+groupsOfThree list =
+    groupHelper list []
+
+
+groupHelper : List a -> List ( a, a, a ) -> List ( a, a, a )
+groupHelper current acc =
+    case current of
+        [ x, xs, xxs ] ->
+            List.append acc [ ( x, xs, xxs ) ]
+
+        x :: xs :: xxs :: tail ->
+            groupHelper tail (List.append acc [ ( x, xs, xxs ) ])
+
+        _ ->
+            []
+
+
 sackPriority : String -> Int
 sackPriority sack =
     let
@@ -19,10 +68,10 @@ sackPriority sack =
             String.length sack // 2
 
         comp1 =
-            compartmentToSet (String.left len sack)
+            toSet (String.left len sack)
 
         comp2 =
-            compartmentToSet (String.right len sack)
+            toSet (String.right len sack)
     in
     Set.intersect comp1 comp2
         |> Set.toList
@@ -31,8 +80,8 @@ sackPriority sack =
         |> Maybe.withDefault 0
 
 
-compartmentToSet : String -> Set String
-compartmentToSet comp =
+toSet : String -> Set String
+toSet comp =
     comp
         |> String.split ""
         |> Set.fromList

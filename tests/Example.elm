@@ -10,7 +10,7 @@ import Test exposing (..)
 
 suite : Test
 suite =
-    todo day3Part1
+    todo day3Part2
 
 
 day1Part1 : String
@@ -36,3 +36,8 @@ day2Part2 =
 day3Part1 : String
 day3Part1 =
     String.join " " [ "Day03", "Part 1:", String.fromInt Day03.totalPriority ]
+
+
+day3Part2 : String
+day3Part2 =
+    String.join " " [ "Day03", "Part 2:", String.fromInt Day03.groupPriority ]
